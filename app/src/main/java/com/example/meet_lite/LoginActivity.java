@@ -11,16 +11,16 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email, password;
-    String emailtxt, passwordtxt;
+    private EditText emaillogin, passwordlogin;
+    String emailstr, passwordstr;
     private Button login,createacc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        emaillogin = findViewById(R.id.emaillogin);
+        passwordlogin = findViewById(R.id.passwordlogin);
         login = findViewById(R.id.login);
         createacc=findViewById(R.id.createnew);
         login.setOnClickListener(new View.OnClickListener() {
@@ -40,21 +40,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginUser() {
-        emailtxt = email.getText().toString();
-        passwordtxt = password.getText().toString();
-        if (emailtxt.isEmpty()) {
-            email.setError("Email cannot be empty");
-            email.requestFocus();
+        emailstr = emaillogin.getText().toString();
+        passwordstr = passwordlogin.getText().toString();
+        if (emailstr.isEmpty()) {
+            emaillogin.setError("Email cannot be empty");
+            emaillogin.requestFocus();
             return;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(emailtxt).matches()) {
-            email.setError("Please enter a valid email id");
-            email.requestFocus();
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailstr).matches()) {
+            emaillogin.setError("Please enter a valid email id");
+            emaillogin.requestFocus();
             return;
         }
-        if (passwordtxt.isEmpty()) {
-            password.setError("Password cannot be empty");
-            password.requestFocus();
+        if (passwordstr.isEmpty()) {
+            passwordlogin.setError("Password cannot be empty");
+            passwordlogin.requestFocus();
             return;
         }
 //        if (passwordtxt.length() < 6) {

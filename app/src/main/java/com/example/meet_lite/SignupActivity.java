@@ -1,5 +1,6 @@
 package com.example.meet_lite;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,11 +9,18 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity {
 
+    FirebaseAuth auth;
     EditText name,password,email;
-    String emailtxt,passwordtxt,nametxt;
+    String emailtxt="",passwordtxt="",nametxt="";
     Button create, alreadyhaveacc;
 
     @Override
@@ -22,6 +30,7 @@ public class SignupActivity extends AppCompatActivity {
         name=findViewById(R.id.name);
         password=findViewById(R.id.password);
         email=findViewById(R.id.email);
+
         create = findViewById(R.id.create);
         alreadyhaveacc = findViewById(R.id.alreadyhaveacc);
 
@@ -71,6 +80,20 @@ public class SignupActivity extends AppCompatActivity {
             password.requestFocus();
             return;
         }
+        auth=FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(emailtxt,passwordtxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(SignupActivity.this,"Account is created",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(SignupActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 //        else {
 //             RetroWork();
 //        }

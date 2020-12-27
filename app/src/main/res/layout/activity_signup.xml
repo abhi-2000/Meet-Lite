@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="50dp"
@@ -31,7 +32,6 @@
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="350dp"
@@ -55,17 +55,30 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/textbox"
+                android:fontFamily="@font/abeezee"
+                android:hint="Full Name"
+                android:inputType="textEmailAddress"
+                android:padding="5dp" />
+
+            <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:inputType="textEmailAddress"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/textbox"
                 android:fontFamily="@font/abeezee"
                 android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:padding="5dp" />
 
             <EditText
@@ -73,16 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="25dp"
-                android:inputType="textPassword"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/textbox"
                 android:fontFamily="@font/abeezee"
                 android:hint="Password"
+                android:inputType="textPassword"
                 android:padding="5dp" />
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/create"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="25dp"
@@ -90,12 +103,12 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/textbox"
                 android:fontFamily="@font/abeezee"
-                android:text="Login"
+                android:text="Create Account"
                 android:textAllCaps="false"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/createnew"
+                android:id="@+id/alreadyhaveacc"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="25dp"
@@ -103,7 +116,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/textbox"
                 android:fontFamily="@font/abeezee"
-                android:text="Create An Account"
+                android:text="Already Have An Account?"
                 android:textAllCaps="false"
                 android:textSize="18sp" />
 

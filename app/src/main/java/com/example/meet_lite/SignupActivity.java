@@ -9,39 +9,48 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
-    private EditText email, password;
-    String emailtxt, passwordtxt;
-    private Button login,createacc;
+    EditText name,password,email;
+    String emailtxt,passwordtxt,nametxt;
+    Button create, alreadyhaveacc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
-        createacc=findViewById(R.id.createnew);
-        login.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_signup);
+        name=findViewById(R.id.name);
+        password=findViewById(R.id.password);
+        email=findViewById(R.id.email);
+        create = findViewById(R.id.create);
+        alreadyhaveacc = findViewById(R.id.alreadyhaveacc);
+
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginUser();
             }
         });
-        createacc.setOnClickListener(new View.OnClickListener() {
+        alreadyhaveacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+
     }
 
     private void LoginUser() {
+        nametxt = name.getText().toString();
         emailtxt = email.getText().toString();
         passwordtxt = password.getText().toString();
+        if (nametxt.isEmpty()) {
+            name.setError("Name cannot be empty");
+            name.requestFocus();
+            return;
+        }
         if (emailtxt.isEmpty()) {
             email.setError("Email cannot be empty");
             email.requestFocus();
@@ -57,11 +66,12 @@ public class LoginActivity extends AppCompatActivity {
             password.requestFocus();
             return;
         }
-//        if (passwordtxt.length() < 6) {
-//            password.setError("Password should atleast 6 char long");
-//            password.requestFocus();
-//            return;
-//        } else {
+        if (passwordtxt.length() < 6) {
+            password.setError("Password should atleast 6 char long");
+            password.requestFocus();
+            return;
+        }
+//        else {
 //             RetroWork();
 //        }
     }

@@ -12,9 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -22,6 +24,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText name,password,email;
     String emailtxt="",passwordtxt="",nametxt="";
     Button create, alreadyhaveacc;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,12 +84,23 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
         auth=FirebaseAuth.getInstance();
+        firebaseFirestore=FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(emailtxt,passwordtxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(SignupActivity.this,"Account is created",Toast.LENGTH_LONG).show();
+                    User user=new User();
+                    user.setName(nametxt);
+                    user.setEmail(emailtxt);
+                    user.setPass(passwordtxt);
+                    firebaseFirestore.collection("Users").document().set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                        }
+                    });
                 }
                 else
                 {

@@ -3,8 +3,10 @@ package com.example.meet_lite;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +22,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emaillogin, passwordlogin;
     String emailstr, passwordstr;
-    private Button login,createacc;
+    private Button login, createacc;
     FirebaseAuth firebaseAuth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +33,22 @@ public class LoginActivity extends AppCompatActivity {
         emaillogin = findViewById(R.id.emaillogin);
         passwordlogin = findViewById(R.id.passwordlogin);
         login = findViewById(R.id.login);
-        firebaseAuth=FirebaseAuth.getInstance();
-        createacc=findViewById(R.id.createnew);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading");
+        firebaseAuth = FirebaseAuth.getInstance();
+        createacc = findViewById(R.id.createnew);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressDialog.show();
                 LoginUser();
             }
         });
         createacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -66,13 +73,15 @@ public class LoginActivity extends AppCompatActivity {
             passwordlogin.requestFocus();
             return;
         }
-        firebaseAuth.signInWithEmailAndPassword(emailstr,passwordstr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(emailstr, passwordstr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                    Toast.makeText(LoginActivity.this,"Logged In",Toast.LENGTH_LONG).show();
-           else
-               Toast.makeText(LoginActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                if (task.isSuccessful()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                } else
+                    Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         });
 //        if (passwordtxt.length() < 6) {
